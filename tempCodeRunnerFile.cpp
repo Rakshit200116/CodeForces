@@ -1,1 +1,1 @@
-            cout << ceil(arr[i] / x) << " ";
+            sum += arr[i];
