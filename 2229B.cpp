@@ -28,7 +28,7 @@ int main()
             amax = max(amax, a[i]);
             sum += b[i];
         }
-        cout << amax + sum <<
+        cout << amax + sum << endl;
     }
     return 0;
 }
