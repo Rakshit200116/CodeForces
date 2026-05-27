@@ -1,1 +1,1 @@
-            sum += arr[i];
+                cout << left << " " << right << endl;
