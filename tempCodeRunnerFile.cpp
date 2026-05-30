@@ -1,1 +1,1 @@
-                cout << left << " " << right << endl;
+seats
