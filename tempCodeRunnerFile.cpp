@@ -1,1 +1,1 @@
-seats
+i % n
