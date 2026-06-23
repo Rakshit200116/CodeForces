@@ -1,31 +1,35 @@
-#include <iostream>
+#include <bits/stdc++.h>
+
 using namespace std;
 
 int main()
 {
     int t;
-    cin >> t;
+    cin >> t; // Read the number of test cases
+
     while (t--)
     {
         int n, k;
-        cin >> n >> k;
-        int a = n, b = 1;
-        while (k - 1)
-        {
-            a -= 1;
-            b += 1;
-            k--;
+        cin >> n >> k; // Read the number of spots (n) and the hour (k)
 
-            if (a <= 0)
-                a += n;
-            if (b > n)
-                b -= n;
-            if (a == b)
-                b += 1;
-            if (b > n)
-                b -= n;
+        k--; // Adjust k to be zero-indexed for easier calculations
+
+        if (n % 2 == 0) // Check if the number of spots is even
+        {
+            int ans = k % n;             // Calculate the position for cat B
+            cout << (k % n) + 1 << "\n"; // Output the 1-indexed position
         }
-        cout << b << endl;
+        else
+        {
+            int val = n / 2; // Calculate the extra step needed for odd n
+
+            // Calculate the position for cat B considering the extra step
+            cout << ((k + (k / val)) % n) + 1 << "\n";
+        }
     }
+
     return 0;
 }
+
+//! Total Time Complexity (TC): O(t)
+//! Total Space Complexity (SC): O(t)

@@ -1,16 +1,7 @@
 #include <iostream>
-using namespace std;
 #include <vector>
-
-bool palindrome(vector<char> s, int n)
-{
-    for (int i = 0; i < n / 2; i++)
-    {
-        if (s[i] != s[n - i - 1])
-            return false;
-    }
-    return true;
-}
+#include <set>
+using namespace std;
 
 int main()
 {
@@ -22,33 +13,44 @@ int main()
         cin >> n;
         string s;
         cin >> s;
-        vector<char> v;
+        set<char> v;
         for (int i = 0; i < n; i++)
-            v.push_back(s[i]);
-        int left = 0, right = n - 1;
-        while (left <= right && s[left] == s[right])
+            v.insert(s[i]);
+        int ans = __INT_MAX__;
+        for (auto c : v)
         {
-            left++;
-            right--;
-        }
-        cout << (char)s[left] << (char)s[right] << endl;
-        if (left > right)
-            cout << 0 << endl;
-        else
-        {
-            int ans = 0;
-            while (left < n)
+            int temp = 0;
+            bool isposs = true;
+            int left = 0, right = n - 1;
+            while (left <= right)
             {
-                if (palindrome(v, n - ans))
-                    break;
-                if (v[left] == s[left])
+                if (s[left] == s[right])
                 {
-                    v.erase(v.begin() + left);
-                    ans++;
+                    left++;
+                    right--;
+                    continue;
                 }
-                left++;
+                if (s[left] == c)
+                {
+                    temp++;
+                    left++;
+                }
+                else if (s[right] == c)
+                {
+                    temp++;
+                    right--;
+                }
+                else
+                {
+                    isposs = false;
+                    break;
+                }
             }
-            cout << ans;
+            if (!isposs)
+                temp = __INT_MAX__;
+            ans = min(ans, temp);
         }
+        cout << (ans == __INT_MAX__ ? -1 : ans) << endl;
     }
+    return 0;
 }
