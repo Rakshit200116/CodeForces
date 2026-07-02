@@ -3,5 +3,17 @@
             "new": "cpp",
             "iostream": "cpp"
       },
-      "code-runner.runInTerminal": true
+      "code-runner.runInTerminal": true,
+      "window.autoDetectColorScheme": false,
+      "window.density.editorTabHeight": "default",
+      "window.titleSeparator": " | ",
+      "workbench.notifications.showInTitleBar": true,
+      "workbench.editor.titleScrollbarSizing": "default",
+      "workbench.editor.titleScrollbarVisibility": "auto",
+      "workbench.browser.showInTitleBar": "whenOpen",
+      "window.title": "${dirty}${activeEditorShort}${separator}${rootName}${separator}${profileName}${separator}${appName}",
+      "chat.agent.thinking.generateTitles": true,
+      "chat.signInTitleBar.enabled": false,
+      "workbench.layoutControl.enabled": false,
+      "chat.agentsControl.enabled": "compact"
 }
