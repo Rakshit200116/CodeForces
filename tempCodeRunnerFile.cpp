@@ -1,91 +1,66 @@
 #include <iostream>
+#include <string>
 using namespace std;
-#include <map>
-#include <cmath>
-
-map<int, int> function(int n)
-{
-    map<int, int> mp;
-    for (int i = 2; i * i <= n; i++)
-    {
-        if (n % i == 0)
-        {
-            while (n % i == 0)
-            {
-                mp[i]++;
-                n /= i;
-            }
-        }
-    }
-    if (n > 1)
-        mp[n]++;
-    return mp;
-}
 
 int main()
 {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
     int t;
     cin >> t;
+
     while (t--)
     {
         int n;
-        cin >> n;
-        map<int, int> mp = function(n);
-        if (mp.size() == 1)
+        long long k;
+        cin >> n >> k;
+
+        string s;
+        cin >> s;
+
+        int N = 2 * n;
+
+        // final[i] = whether there is a potato at position i
+        // Start with the original configuration.
+        string final = s;
+
+        // Handle all non-circular 10 pairs.
+        for (int i = 0; i < N - 1; i++)
         {
-            int power = mp.begin()->second;
-            if (power >= 6)
+            if (s[i] == '1' && s[i + 1] == '0')
             {
-                cout << "YES" << endl;
-                int number = mp.begin()->first;
-                cout << pow(number, 1) << " " << pow(number, 2) << " " << pow(number, power - 3) << endl;
+                final[i] = '0';
+                final[i + 1] = '1';
             }
-            else
-                cout << "NO" << endl;
         }
-        else if (mp.size() >= 3)
+
+        // Handle the circular pair: last -> first
+        if (s[N - 1] == '1' && s[0] == '0')
         {
-            cout << "YES" << endl;
-            auto sec = mp.begin();
-            sec++;
-            cout << pow(mp.begin()->first, mp.begin()->second) << " " << pow(sec->first, sec->second) << " ";
-            long long third = 1;
-            sec++;
-            for (; sec != mp.end(); ++sec)
-            {
-                // cout << sec->first << " " << sec->second << endl;
-                third *= pow(sec->first, sec->second);
-            }
-            cout << third << endl;
+            final[N - 1] = '0';
+            final[0] = '1';
         }
-        else
+
+        int redScore = 0;
+        int blueScore = 0;
+
+        for (int i = 0; i < N; i++)
         {
-            auto it = mp.begin();
-            int pow1 = it->second;
-            int num1 = it->first;
-            it++;
-            int pow2 = it->second;
-            int num2 = it->first;
-            if (max(pow1, pow2) >= 6)
+            if (final[i] == '1')
             {
-                cout << "YES" << endl;
-                if (pow1 >= pow2)
-                {
-                    cout << pow(num1, 1) << " " << pow(num1, 2) << " " << pow(num1, pow1 - 3) * pow(num2, pow2) << endl;
-                }
+                // Position i is 0-indexed.
+                // i even -> position i+1 is odd -> Red.
+                // i odd  -> position i+1 is even -> Blue.
+                if (i % 2 == 0)
+                    blueScore++;
                 else
-                {
-                    cout << pow(num2, 1) << " " << pow(num2, 2) << " " << pow(num2, pow2 - 3) * pow(num1, pow1) << endl;
-                }
+                    redScore++;
             }
-            else if (pow1 >= 2 && pow2 >= 2)
-            {
-                cout << "YES" << endl;
-                cout << num1 << " " << num2 << " " << pow(num1, pow1 - 1) * pow(num2, pow2 - 1) << endl;
-            }
-            else
-                cout << "NO" << endl;
         }
+
+        cout << redScore << " " << blueScore << '\n';
     }
+
     return 0;
 }
