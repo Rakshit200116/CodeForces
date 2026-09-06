@@ -1,40 +1,29 @@
 #include <iostream>
 #include <vector>
-#include <cmath>
 #include <algorithm>
 using namespace std;
 
-int trailing_zeros(long long x)
+int trailing_zero(int n)
 {
     int ans = 0;
-    vector<int> dig;
-    while (x > 0)
+    while (n > 0)
     {
-        dig.push_back(x % 10);
-        x /= 10;
-    }
-    for (int i = 0; i < dig.size(); i++)
-    {
-        if (dig[i] != 0)
+        if (n % 10 == 0)
+            ans++;
+        else
             break;
-        ans++;
+        n /= 10;
     }
     return ans;
 }
 
-long long rev(long long x)
+int digits(int n)
 {
-    vector<int> v;
-    while (x > 0)
+    int ans = 0;
+    while (n > 0)
     {
-        v.push_back(x % 10);
-        x /= 10;
-    }
-    long long ans = 0;
-    int length = v.size() - 1;
-    for (int i = 0; i < v.size(); i++)
-    {
-        ans += v[i] * (pow(10, length - i));
+        ans++;
+        n /= 10;
     }
     return ans;
 }
@@ -47,24 +36,28 @@ int main()
     {
         int n, m;
         cin >> n >> m;
-        vector<pair<int, long long>> v;
+        vector<pair<int, int>> v;
         for (int i = 0; i < n; i++)
         {
-            long long temp;
+            int temp;
             cin >> temp;
-            v.push_back({trailing_zeros(temp), temp});
+            v.push_back({trailing_zero(temp), digits(temp)});
         }
-        sort(v.begin(), v.end(), greater<pair<int, long long>>());
-        while (v.size() > 1)
-        { // anna's chance
-            if (v[0].first > 0)
-            {
-                v.push_back({0, rev(v[0].second)});
-                v.erase(v.begin());
-            }
-
-            // sasha's chance
-                }
+        sort(v.begin(), v.end(), greater<pair<int, int>>());
+        for (int i = 0; i < n; i += 2)
+        {
+            v[i].second -= v[i].first;
+        }
+        long long ans = 0;
+        for (int i = 0; i < n; i++)
+        {
+            ans += v[i].second;
+        }
+        // cout << ans << endl;
+        if (ans > m)
+            cout << "Sasha" << endl;
+        else
+            cout << "Anna" << endl;
     }
     return 0;
 }
