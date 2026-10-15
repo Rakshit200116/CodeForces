@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
 int main()
@@ -10,18 +9,30 @@ int main()
     {
         int n, k;
         cin >> n >> k;
-        vector<long long> v(n);
+        int arr[n];
         for (int i = 0; i < n; i++)
-            cin >> v[i];
+            cin >> arr[i];
+        int prefix[n] = {0};
+        int count = 0;
+        for (int i = 0; i < n - 1; i++)
+        {
+            if (arr[i] < 2 * arr[i + 1])
+                count++;
+            prefix[i + 1] = count;
+        }
         int left = 0, right = k;
         int ans = 0;
         while (right < n)
         {
-            int multiplier = 2;
-            for (int i = left; i < right; i++)
+            int pairs = prefix[right] - prefix[left];
+            if (pairs == k)
             {
+                ans++;
             }
+            left++;
+            right++;
         }
+        cout << ans << endl;
     }
     return 0;
 }
